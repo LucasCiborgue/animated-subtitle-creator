@@ -1,0 +1,8 @@
+os
+PIL
+numpy
+subprocess
+math
+shutil
+json
+tkinter
