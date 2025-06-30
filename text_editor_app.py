@@ -11,6 +11,8 @@ from floating import float_animation
 from sliding_gradient import sliding_gradient_transition
 from counter_shake import counter_shake
 from blur_to_clear import blur_to_clear
+from grow_blur_swap import grow_blur_swap
+
 
 def subtitle(opt1, opt2, opt3, steps,easing):
     #place holder
@@ -130,7 +132,8 @@ class subtitleApp():
             "Sliding_Gradient",
             "Subtitle",
             "Counter_Shake",
-            "Blur_to_Clear"
+            "Blur_to_Clear",
+            "Grow_Blur_Swap"
         ]
         
         self.image_functions = [
@@ -144,6 +147,7 @@ class subtitleApp():
             subtitle,
             counter_shake,
             blur_to_clear,
+            grow_blur_swap,
         ]
         
         self.EASING_FUNCTIONS = [
