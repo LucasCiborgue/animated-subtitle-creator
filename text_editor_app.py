@@ -9,7 +9,7 @@ from charging import blend_images
 from gradient import gradient_transition
 from floating import float_animation
 from sliding_gradient import sliding_gradient_transition
-
+from counter_shake import counter_shake
 
 def subtitle(opt1, opt2, opt3, steps):
     #place holder
@@ -127,7 +127,8 @@ class subtitleApp():
             "Sliding",
             "Sliding_Fade",
             "Sliding_Gradient",
-            "Subtitle"
+            "Subtitle",
+            "Counter_Shake"
         ]
         
         self.image_functions = [
@@ -139,6 +140,7 @@ class subtitleApp():
             slide_transition_with_fade,
             sliding_gradient_transition,
             subtitle,
+            counter_shake,
         ]
         
         # Main window
@@ -210,8 +212,8 @@ class subtitleApp():
         # Call it once on startup
         self.refresh_preset_menu()
                 
-        # Create 8 function buttons
-        for i in range(8):
+        # Create function buttons
+        for i in range(len(self.function_name)):
             btn = tk.Button(button_frame, text=f"{self.function_name[i]}", width=20, height=2,
                             command=lambda idx=i: self.handle_button_click(idx, text_area))
             btn.pack(pady=5)
