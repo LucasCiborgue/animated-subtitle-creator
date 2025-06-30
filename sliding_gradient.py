@@ -1,6 +1,6 @@
 from utilities import *
 
-def sliding_gradient_transition(set1_dir, set2_dir, output_dir, steps=30, gradient_width=100):
+def sliding_gradient_transition(set1_dir, set2_dir, output_dir, steps=30,easing="linear", gradient_width=100):
     file_names = sorted(os.listdir(set1_dir))
 
     frame_idx = 0
@@ -13,7 +13,8 @@ def sliding_gradient_transition(set1_dir, set2_dir, output_dir, steps=30, gradie
         width, height = img1.size
 
         for i in range(steps):
-            slide_x = int((i + 1) / steps * width)
+            # Mask clipping width
+            slide_x = int(Easing.apply(easing, i / steps) * width)
             effective_width = min(slide_x, width)
 
             # Crop img2 to current slide width

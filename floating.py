@@ -1,6 +1,6 @@
 from utilities import *
 
-def float_animation(input_folder, placeholder, output_dir, steps=60, canvas_size=(800, 300), amplitude=10):
+def float_animation(input_folder, placeholder, output_dir, steps=60,easing="linear", canvas_size=(800, 300), amplitude=10):
     os.makedirs(output_dir, exist_ok=True)
     file_names = sorted(os.listdir(input_folder))
 
@@ -12,7 +12,10 @@ def float_animation(input_folder, placeholder, output_dir, steps=60, canvas_size
         canvas_width, canvas_height = canvas_size
 
         for i in range(steps):
-            offset_y = int(amplitude * math.sin(2 * math.pi * i / steps))
+            # Offset shake motion (eased angle, optional)
+            angle_progress = Easing.apply(easing, i / steps)
+            offset_y = int(amplitude * math.sin(2 * math.pi * angle_progress))
+ 
 
             # Create transparent canvas
             frame = Image.new("RGBA", canvas_size, (0, 0, 0, 0))

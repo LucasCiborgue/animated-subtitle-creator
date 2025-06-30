@@ -1,6 +1,6 @@
 from utilities import *
 
-def slide_transition(set1_dir, set2_dir, output_dir, steps=20):
+def slide_transition(set1_dir, set2_dir, output_dir, steps=20, easing = "linear"):
     file_names = sorted(os.listdir(set1_dir))
 
     frame_idx = 0
@@ -14,7 +14,10 @@ def slide_transition(set1_dir, set2_dir, output_dir, steps=20):
 
         for i in range(steps):
             # Calculate width of img1 to show
-            slide_width = int((i + 1) / steps * width)
+            # Sliding mask width
+            slide_progress = Easing.apply(easing, (i + 1) / steps)
+            slide_width = int(slide_progress * width)
+
 
             # Crop left portion of img1 and paste over img2
             img1_crop = img1.crop((0, 0, slide_width, height))

@@ -1,6 +1,6 @@
 from utilities import *
 
-def blend_images(set1_dir, set2_dir, output_dir, steps=10):
+def blend_images(set1_dir, set2_dir, output_dir, steps=10,easing="linear"):
     os.makedirs(output_dir, exist_ok=True)
     file_names = sorted(os.listdir(set1_dir))
 
@@ -14,6 +14,8 @@ def blend_images(set1_dir, set2_dir, output_dir, steps=10):
 
         for i in range(steps):
             alpha = i / (steps - 1)
+            alpha = Easing.apply(easing, alpha)
+            
             blended = Image.blend(img1, img2, alpha)
             
             frame_name = os.path.join(output_dir, f"frame_{i:04d}.png")

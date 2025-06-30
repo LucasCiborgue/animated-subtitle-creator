@@ -1,10 +1,48 @@
 import os
-from PIL import Image, ImageDraw, ImageFont, ImageEnhance
+from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageFilter
 import numpy as np
 import subprocess
 import math
 import shutil
 
+
+class Easing:
+    @staticmethod
+    def linear(t: float) -> float:
+        return t
+
+    @staticmethod
+    def ease_in_quad(t: float) -> float:
+        return t * t
+
+    @staticmethod
+    def ease_out_quad(t: float) -> float:
+        return t * (2 - t)
+
+    @staticmethod
+    def ease_in_out_quad(t: float) -> float:
+        return 2 * t * t if t < 0.5 else -1 + (4 - 2 * t) * t
+
+    @staticmethod
+    def ease_in_cubic(t: float) -> float:
+        return t ** 3
+
+    @staticmethod
+    def ease_out_cubic(t: float) -> float:
+        return (t - 1) ** 3 + 1
+
+    @staticmethod
+    def ease_in_out_cubic(t: float) -> float:
+        if t < 0.5:
+            return 4 * t ** 3
+        else:
+            return (t - 1) * (2 * t - 2) ** 2 + 1
+
+    @staticmethod
+    def apply(ease_func_name: str, t: float) -> float:
+        t = max(0.0, min(1.0, t))  # Clamp between 0 and 1
+        func = getattr(Easing, ease_func_name, Easing.linear)
+        return func(t)
 
 def text_to_image(text, output_path='output.png', font_size=80, image_size=(1000, 400),
                   color_shadow_rgb=(128, 128, 128),      # gray shadow

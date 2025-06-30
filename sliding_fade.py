@@ -1,7 +1,7 @@
 from utilities import *
 
 
-def slide_transition_with_fade(set1_dir, set2_dir, output_dir, steps=20):
+def slide_transition_with_fade(set1_dir, set2_dir, output_dir, steps=20, easing="linear"):
     
     file_names = sorted(os.listdir(set1_dir))
 
@@ -17,7 +17,9 @@ def slide_transition_with_fade(set1_dir, set2_dir, output_dir, steps=20):
         i2 = 0
         for i in range(steps):
             slide_width = int((i + 1) / steps * width)
-            fade_alpha = int(255 * (i + 1) / steps)
+            # Fade in/out effect
+            fade_progress = Easing.apply(easing, (i + 1) / steps)
+            fade_alpha = int(255 * fade_progress)
 
             # Crop the sliding portion
             img1_crop = img1.crop((0, 0, slide_width, height))

@@ -1,7 +1,7 @@
 from utilities import *
 
 
-def counter_shake(set1_dir, set2_dir, output_dir, steps=20, shake_range=12,speed_multiplier=2):
+def counter_shake(set1_dir, set2_dir, output_dir, steps=20,easing = "linear", shake_range=12,speed_multiplier=2):
     os.makedirs(output_dir, exist_ok=True)
     file_names = sorted(os.listdir(set1_dir))
     frame_idx = 0
@@ -14,8 +14,10 @@ def counter_shake(set1_dir, set2_dir, output_dir, steps=20, shake_range=12,speed
         width, height = img1.size
 
         for i in range(steps):
-             # Increase frequency using speed_multiplier
-            angle = i / steps * 2 * np.pi * speed_multiplier
+            # Increase frequency using speed_multiplier
+            # Shaky motion angle (oscillating faster with easing)
+            oscillation = Easing.apply(easing, i / steps)
+            angle = oscillation * 2 * np.pi * speed_multiplier
 
             # Faster shaking motion
             offset_x = int(np.sin(angle) * shake_range)

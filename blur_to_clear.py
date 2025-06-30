@@ -1,7 +1,7 @@
 from utilities import *
 
 
-def blur_to_clear(set1_dir, set2_dir, output_dir, steps=30, max_blur=8, max_scale=1.5):
+def blur_to_clear(set1_dir, set2_dir, output_dir, steps=30,easing="linear", max_blur=8, max_scale=1.5):
     file_names = sorted(os.listdir(set1_dir))
     frame_idx = 0
 
@@ -13,8 +13,11 @@ def blur_to_clear(set1_dir, set2_dir, output_dir, steps=30, max_blur=8, max_scal
         width, height = img1.size
 
         for i in range(steps):
-            progress = i / (steps - 1)
-
+            # Your current progress expression
+            raw_progress = i / (steps - 1)
+            progress = Easing.apply(easing, raw_progress)  # easing is a string like 'ease_in_out_quad'
+            
+            
             # --- IMAGE 1: blur, shrink, fade out
             blur_amount = max_blur * (1 - progress)
             scale1 = max_scale - (max_scale - 1) * progress

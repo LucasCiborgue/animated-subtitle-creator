@@ -12,7 +12,7 @@ from sliding_gradient import sliding_gradient_transition
 from counter_shake import counter_shake
 from blur_to_clear import blur_to_clear
 
-def subtitle(opt1, opt2, opt3, steps):
+def subtitle(opt1, opt2, opt3, steps,easing):
     #place holder
     return 0
 
@@ -104,7 +104,7 @@ class subtitleApp():
         )
         # Call the specific function for this button
         image_func = self.image_functions[index]
-        image_func("set1", "set2","output/"+self.function_name[index],steps=120)
+        image_func("set1", "set2","output/"+self.function_name[index],steps=120, easing=self.easing_var.get())
     
 
     def choose_color(self, label):
@@ -145,6 +145,17 @@ class subtitleApp():
             counter_shake,
             blur_to_clear,
         ]
+        
+        self.EASING_FUNCTIONS = [
+            "linear",
+            "ease_in_quad",
+            "ease_out_quad",
+            "ease_in_out_quad",
+            "ease_in_cubic",
+            "ease_out_cubic",
+            "ease_in_out_cubic"
+        ]
+        
         
         # Main window
         root = tk.Tk()
@@ -211,6 +222,18 @@ class subtitleApp():
             preset_frame, text="📂 Load Preset", width=15,
             command=lambda: self.load_preset(self.preset_selector_var.get())
         ).grid(row=1, column=1)
+        
+        # Easing selector
+        easing_frame = tk.Frame(button_frame)
+        easing_frame.pack(pady=10)
+
+        tk.Label(easing_frame, text="Easing:").pack(side=tk.LEFT, padx=(0, 5))
+
+        self.easing_var = tk.StringVar()
+        self.easing_var.set("linear")  # default
+
+        self.easing_menu = tk.OptionMenu(easing_frame, self.easing_var, *self.EASING_FUNCTIONS)
+        self.easing_menu.pack(side=tk.LEFT)
         
         # Call it once on startup
         self.refresh_preset_menu()

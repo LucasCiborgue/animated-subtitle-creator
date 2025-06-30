@@ -1,7 +1,7 @@
 from utilities import *
 
 
-def gradient_transition(set1_dir, set2_dir, output_dir, steps=30):
+def gradient_transition(set1_dir, set2_dir, output_dir, steps=30,easing="linear"):
     file_names = sorted(os.listdir(set1_dir))
 
     frame_idx = 0
@@ -13,7 +13,8 @@ def gradient_transition(set1_dir, set2_dir, output_dir, steps=30):
         width, height = img1.size
         i2 = 0
         for i in range(steps):
-            progress = (i + 2) / steps
+            progress = Easing.apply(easing, (i + 2) / steps)
+            
 
             # Create horizontal gradient alpha mask
             gradient = np.zeros((height, width), dtype=np.uint8)

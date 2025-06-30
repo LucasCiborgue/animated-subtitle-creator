@@ -1,7 +1,7 @@
 from utilities import *
 
 
-def invertedBig(set1_dir, set2_dir, output_dir, steps=30):
+def invertedBig(set1_dir, set2_dir, output_dir, steps=30,easing = "linear"):
     file_names = sorted(os.listdir(set1_dir))
     frame_idx = 0
 
@@ -12,7 +12,8 @@ def invertedBig(set1_dir, set2_dir, output_dir, steps=30):
         width, height = img1.size
 
         for step in range(steps):
-            progress = step / (steps - 1)
+            progress = Easing.apply(easing, step / (steps - 1))
+            
 
             # img1 shrinks and fades out
             scale1 = 1.0 - 0.3 * progress   # from 1.0 → 0.7
